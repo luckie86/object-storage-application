@@ -1,0 +1,58 @@
+{
+    "users": [
+        {
+            "id": "88bbc403-6618-4f6e-8d45-7eaa6d063af3",
+            "user": "luka",
+            "password": "$2b$10$9gJrsf40DcWT9bApceK6ie84MrMaZ5gIDeKBbQGosgGLTft3sSi5i",
+            "timestamp": "2020-04-27T10:51:46.289Z"
+        }
+    ],
+    "locations": [
+        {
+            "id": "a0c51094-05d9-465f-8745-6cd9ee45b96d",
+            "name": "Kranj"
+        },
+        {
+            "id": "a0c51094-05d9-465f-8745-6cd9ee45b96d",
+            "name": "Ljubljana"
+        }
+    ],
+    "buckets": [
+        {
+            "userId": "88bbc403-6618-4f6e-8d45-7eaa6d063af3",
+            "id": "28f6523c-78da-4343-a643-aaf17668588a",
+            "name": "New bucket",
+            "location": {
+                "id": "3dee6db8-761d-4573-ba5a-95006052cdcc",
+                "name": "Ljubljana"
+            }
+        },
+        {
+            "userId": "88bbc403-6618-4f6e-8d45-7eaa6d063af3",
+            "id": "5f0cd8fa-91cf-43f7-a262-922aef7b65b0",
+            "name": "Pro Bucket",
+            "location": {
+                "id": "7fc1c48c-6a74-40fa-a0cf-f5581aa71d83",
+                "name": "Ljubljana"
+            }
+        },
+        {
+            "userId": "88bbc403-6618-4f6e-8d45-7eaa6d063af3",
+            "id": "f65d20fc-b486-4502-96ee-ae005d02d238",
+            "name": "Lukas bucket",
+            "location": {
+                "id": "38c2e98b-4667-44e1-963e-50ca165ac30c",
+                "name": "Kranj"
+            }
+        },
+        {
+            "userId": "88bbc403-6618-4f6e-8d45-7eaa6d063af3",
+            "id": "ebfdc8f3-343f-4ef8-ba38-5717af42aa2d",
+            "name": "NEw bucket",
+            "location": {
+                "id": "8c3358ec-f8e9-43be-8f45-2ae6a7a5ea52",
+                "name": "Kranj"
+            }
+        }
+    ]
+}

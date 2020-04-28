@@ -1,1 +1,8 @@
-<h1>HELOO</h1>
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="token">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/buckets">Buckets</a>
+        <a class="nav-item nav-link float-right" (click)="logOut()">Logout</a>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

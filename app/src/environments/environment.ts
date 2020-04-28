@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  STORAGE_KEY: "token",
+  AUTHORIZATION_TOKEN: "84DCC106-A7D0-4945-A494-C6F3F32D58AD",
+  ROUTES: {
+    REGISTER_ROUTE: "http://localhost:3000/auth/register",
+    LOGIN_ROUTE: "http://localhost:3000/auth/login",
+    GET_USER_ROUTE: "",
+    LOCATIONS_ROUTE: "http://localhost:3000/locations",
+    CREATE_NEW_BUCKET_ROUTE: "http://localhost:3000/buckets/save",
+    GET_BUCKETS_ROUTE: "http://localhost:3000/buckets",
+    GET_BUCKET_ROUTE: "http://localhost:3000/bucket/edit/",
+    DELETE_BUCKET_ROUTE: "http://localhost:3000/bucket/delete/"
+  }
 };
 
 /*
