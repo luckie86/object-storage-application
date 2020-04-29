@@ -8,11 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from "./app-routing.module";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from "./core/token.interceptor";
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule  } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { BucketsComponent } from './buckets/buckets.component';
+import { ngxUiLoaderConfig } from './core/constants/constants';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { BucketsComponent } from './buckets/buckets.component';
   ],
   imports: [
     BrowserAnimationsModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     HttpClientModule,
     ToastrModule.forRoot(),
     AppRoutingModule,

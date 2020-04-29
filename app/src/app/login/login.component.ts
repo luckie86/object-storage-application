@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe((response: any)=>{
+      .subscribe((response: any) => {
         if (response.status === 200) {
           this.tokenService.setToken(response.body.token);
           this.router.navigate(['/buckets']);

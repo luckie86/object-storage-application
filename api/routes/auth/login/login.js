@@ -8,6 +8,7 @@ const JWTHelper = require("../../../private/JWTHelper");
 router.post('/', function(req, res, next) {
     let userName = req.body.userName;
     let password = req.body.password;
+    console.log(req);
     let users = dbHelper.getUsers();
     let user = users.find((user) => user.user === userName);
     if (user) {

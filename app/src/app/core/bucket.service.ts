@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BucketService {
+
+  httpUploadOptions = {
+    headers: new HttpHeaders({ Accept: 'application/json' }),
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -14,15 +18,24 @@ export class BucketService {
   }
 
   getBuckets() {
-    return this.http.get(environment.ROUTES.GET_BUCKETS_ROUTE);
+    return this.http.get(environment.ROUTES.GET_BUCKETS_ROUTE, this.httpUploadOptions);
   }
 
-  getBucket(uuid: string) {
-    return this.http.get(`${environment.ROUTES.GET_BUCKET_ROUTE}${uuid}`);
+  getObjects(bucketId: string) {
+    return this.http.get(`${environment.ROUTES.GET_OBJECTS_ROUTE}${bucketId}/objects`);
   }
 
-  deleteBucket(uuid: string) {
-    return this.http.delete(`${environment.ROUTES.DELETE_BUCKET_ROUTE}${uuid}`)
+  getObject(objectUUID: string) {
+    return this.http.get(`${environment.ROUTES.GET_OBJECTS_ROUTE}${objectUUID}`);
+  }
+
+  deleteObject(bucketId) {
+    console.log(bucketId);
+    return this.http.delete(`${environment.ROUTES.DELETE_OBJECT_ROUTE}${bucketId}/delete`);
+  }
+
+  uploadObject(formData) {
+    return this.http.post(environment.ROUTES.UPLOAD_OBJECT_ROUTE, formData, this.httpUploadOptions)
   }
 
 }

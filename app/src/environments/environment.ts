@@ -9,12 +9,14 @@ export const environment = {
   ROUTES: {
     REGISTER_ROUTE: "http://localhost:3000/auth/register",
     LOGIN_ROUTE: "http://localhost:3000/auth/login",
-    GET_USER_ROUTE: "",
     LOCATIONS_ROUTE: "http://localhost:3000/locations",
     CREATE_NEW_BUCKET_ROUTE: "http://localhost:3000/buckets/save",
     GET_BUCKETS_ROUTE: "http://localhost:3000/buckets",
-    GET_BUCKET_ROUTE: "http://localhost:3000/bucket/edit/",
-    DELETE_BUCKET_ROUTE: "http://localhost:3000/bucket/delete/"
+    GET_BUCKET_ROUTE: "http://localhost:3000/buckets",
+    GET_OBJECTS_ROUTE: "http://localhost:3000/buckets/",
+    UPLOAD_OBJECT_ROUTE: "http://localhost:3000/buckets/upload",
+    DELETE_BUCKET_ROUTE: "http://localhost:3000/bucket/delete/",
+    DELETE_OBJECT_ROUTE: "http://localhost:3000/buckets/",
   }
 };
 

@@ -1,7 +1,13 @@
+interface Location {
+    id: string;
+    name: string;
+}
+
 export interface Response {
-    status: number;
-    token: Text;
-    data?: string;
+    userId: string;
+    id: string;
+    name: string;
+    location: Location;
 }
 
 export interface User {

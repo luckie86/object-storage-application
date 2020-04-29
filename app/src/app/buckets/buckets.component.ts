@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../core/bucket.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LocationsService } from '../core/locations.service';
-import { Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Response } from "../core/models/models";
 
 @Component({
   selector: 'app-buckets',
@@ -14,23 +13,20 @@ import { Subject } from 'rxjs';
 export class BucketsComponent implements OnInit {
 
   createNewBucketForm: FormGroup;
-  buckets: [];
-  locations: [];
+  buckets = [] as any;
+  objects = [] as any;
+  locations = [] as any;
+  uploadedFiles;
   createNewBucketFlag = false;
-  destroyed = new Subject<any>();;
+  showBucketDetailsFlag = false;
+  uploadObjectFlag = false;
+  currentBucketUUID;
+  formData;
+  objectFormData;
 
-  constructor(private router: Router, private locationsService: LocationsService, private bucketService: BucketService, private formBuilder: FormBuilder) { }
+  constructor(private loaderService: NgxUiLoaderService, private locationsService: LocationsService, private bucketService: BucketService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-
-    this.router.events.pipe(
-      filter((event: RouterEvent) => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.bucketService.getBuckets().subscribe((response: any) => {
-        this.buckets = response.bucketsFromCurrentUser;
-      });
-    });
-
     this.createNewBucketForm = this.formBuilder.group({
       bucketName: ['', Validators.required],
       bucketLocation: ['', Validators.required]
@@ -48,15 +44,46 @@ export class BucketsComponent implements OnInit {
   }
 
   createNewBucket() {
+    this.loaderService.startLoader("createNewBucket");
     this.bucketService.saveBucket(this.createNewBucketForm.value.bucketName, this.createNewBucketForm.value.bucketLocation)
-      .subscribe((response: any) => {
-        console.log(response);
+      .subscribe((response: Response) => {
+        this.buckets.push(response);
+        this.loaderService.stopLoader("createNewBucket");
       });
   }
 
-  ngOnDestroy() {
-    this.destroyed.next();
-    this.destroyed.complete();
+  showBucketDetails(bucketId: string) {
+    this.currentBucketUUID = bucketId;
+    this.showBucketDetailsFlag = true;
+    this.bucketService.getObjects(bucketId).subscribe((response: any) => {
+      this.objects = response.objectFormCurrentBucket;
+    });
   }
 
+  fileChange(event) {
+    this.uploadedFiles = event.target.files;
+  }
+
+  uploadObject() {
+    this.formData = new FormData();
+    [...this.uploadedFiles].forEach(file => {
+      this.formData.append("uploads", file, file.name);
+      this.formData.append("bucketId", this.currentBucketUUID);
+    });
+    this.bucketService.uploadObject(this.formData).subscribe((response: any)=> {
+      this.objects.push(response);
+    });
+  }
+
+  deleteObject(objectId: string) {
+    this.bucketService.deleteObject(objectId).subscribe((response: any) => {
+      if (response.status) {
+        this.objects = this.objects.filter(object => object.objectId !== objectId);
+      }
+    })
+  }
+
+  showUpload() {
+    this.uploadObjectFlag = true;
+  }
 }

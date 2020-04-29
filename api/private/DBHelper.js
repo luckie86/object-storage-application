@@ -35,11 +35,11 @@ class DBHelper {
 
     saveModel (model) {
         let json = JSON.stringify(model);
-        fs.writeFile('DB.json', json, 'utf8', (err, res) => {
+        fs.writeFile('DB.json', json, 'utf8', (err) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log(res);
+                console.log("Model has been saved");
             }
                 
         });
@@ -73,6 +73,15 @@ class DBHelper {
         }    
     }
 
+    getObjects () {
+        if (!this.model) {
+            this.getModel();
+            return this.model.objects;
+        } else {
+            return this.model.objects;
+        }    
+    }
+
     getLocations () {
         if (!this.model) {
             this.getModel();
@@ -89,6 +98,28 @@ class DBHelper {
             this.model.buckets.push({"userId": currentUserId, "id": bucketUUID, "name": bucketName, "location": {"id": locationUUID, "name": locationName }});
             this.saveModel(this.model);
             return true;
+        }
+    }
+
+    saveObject(bucketId, objectUUID, name, modified, size) {
+        if(!bucketId || !name || !modified || !size || !objectUUID) {
+            return false;
+        } else { 
+            this.model.objects.push({"bucketId": bucketId, "objectId": objectUUID, "name": name, "modified": modified, "size": size});
+            this.saveModel(this.model);
+            return true;
+        }
+    }
+
+    deleteObject(objectUUID) {
+        if(!objectUUID) {
+            return false;
+        } else {
+            let currentModel = this.model;
+            let newObjects = currentModel.objects.filter((object) => object.objectId !== objectUUID);
+            currentModel.objects = newObjects;
+            this.saveModel(currentModel);
+            return true;  
         }
     }
 

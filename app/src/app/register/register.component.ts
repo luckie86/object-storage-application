@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     this.authService.register(this.registerForm.value.username, this.registerForm.value.password)
-      .subscribe((response: any)=>{
+      .subscribe((response: any) => {
         if (response.status === 200) {
           this.tokenService.setToken(response.body.token);
           this.router.navigate(['/login']);

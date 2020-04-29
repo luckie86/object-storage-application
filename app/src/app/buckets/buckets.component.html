@@ -1,6 +1,5 @@
-
-<h2>Bucket list</h2>
 <div *ngIf="createNewBucketFlag" class="container">
+  <h2>Create New Bucket</h2>
     <form [formGroup]="createNewBucketForm" (ngSubmit)="createNewBucket()" class="form-inline">
         <div class="form-group mb-2">
           <label for="bucketName" class="sr-only">Email</label>
@@ -14,19 +13,20 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2" (click)="createNewBucket">Create New Bucket</button>
+        <button type="submit" class="btn btn-warning mb-2" (click)="createNewBucket">Create New Bucket</button>
     </form>
 </div>
 
-
-<div class="table-responsive">
+<div *ngIf="!showBucketDetailsFlag" class="container">
+  <h2>Bucket List</h2>
+  <div class="table-responsive">
     <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Location</th>
-            <th scope="col"><button *ngIf="!createNewBucketFlag" class="btn btn-primary" (click)="openCreateForm()">Create New Bucket</button></th>
+            <th scope="col"><button *ngIf="!createNewBucketFlag" class="btn btn-warning mb-2" (click)="openCreateForm()">Create New Bucket</button></th>
           </tr>
         </thead>
         <tbody>
@@ -34,8 +34,49 @@
             <th scope="row">{{i+1}}</th>
             <td>{{bucket.name}}</td>
             <td>{{bucket.location.name}}</td>
-            <td></td>
+            <td><button *ngIf="!showBucketDetailsFlag" class="btn btn-primary mb-2" (click)="showBucketDetails(bucket.id)">Show Bucket Details</button></td>
           </tr>
         </tbody>
     </table>
+  </div>  
 </div>
+
+
+<div *ngIf="showBucketDetailsFlag" class="container">
+  <h2>Object Details</h2>
+  <div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Modified</th>
+            <th scope="col">Size</th>
+            <th><button class="btn btn-success mb-2" (click)="showUpload()">Upload Object</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let object of objects; index as i;">
+            <th scope="row">{{i+1}}</th>
+            <td>{{object.name}}</td>
+            <td>{{object.modified | date}}</td>
+            <td>{{object.size}}</td>
+            <td><button class="btn btn-warning mb-2" (click)="deleteObject(object.objectId)">Delete Object</button></td>
+          </tr>
+        </tbody>
+    </table>
+  </div>  
+</div>
+
+<div *ngIf="uploadObjectFlag" class="container">
+  <h2>Upload Object</h2>
+    <form class="form-inline">
+        <div class="form-group mb-2">
+          <label for="fileUpload" class="sr-only">Email</label>
+          <input id="fileUpload" type="file" class="form-control" name="file" multiple="multiple" (change)="fileChange($event)">
+        </div>
+    </form>
+    <button class="btn btn-warning mb-2" (click)="uploadObject()">Upload Object</button>
+</div>
+
+<ngx-ui-loader [loaderId]="'createNewBucket'"></ngx-ui-loader>
