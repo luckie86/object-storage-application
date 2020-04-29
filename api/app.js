@@ -9,6 +9,7 @@ const userRouter = require("./routes/users/users");
 const registerRouter = require("./routes/auth/register/register");
 const loginRouter = require("./routes/auth/login/login");
 const bucketsRouter = require("./routes/buckets/buckets");
+const uploudRouter = require("./routes/buckets/upload");
 const locationsRouter = require("./routes/locations/locations");
 const dbHelper = require("./private/DBHelper");
 
@@ -21,10 +22,10 @@ setTimeout(()=> {
 }, 200)
 
 const app = express();
-app.use(express.static(__dirname + "../app/dist/app"));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, uploadDir: __dirname + '/uploads' }));
-app.use(bodyParser.json({ limit: '50mb', uploadDir: __dirname + '/uploads', keepExtensions: true }));
 app.use(cors());
+app.use(express.static(__dirname + "../app/dist/app"));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb', keepExtensions: true }));
 app.use(jsonErrorHandler);
 
 // Routes
@@ -32,11 +33,13 @@ app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/auth/register", registerRouter);
 app.use("/auth/login", loginRouter);
+app.use("/buckets", bucketsRouter);
 app.use("/buckets", formidableMiddleware({
     encoding: 'utf-8',
     uploadDir: __dirname + '/uploads',
     multiples: true, // req.files to be arrays of files
-}), bucketsRouter);
+    keepExtensions: true
+}), uploudRouter);
 app.use("/locations", locationsRouter);
 
 module.exports = app;

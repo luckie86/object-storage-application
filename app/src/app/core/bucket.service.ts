@@ -30,7 +30,6 @@ export class BucketService {
   }
 
   deleteObject(bucketId) {
-    console.log(bucketId);
     return this.http.delete(`${environment.ROUTES.DELETE_OBJECT_ROUTE}${bucketId}/delete`);
   }
 
